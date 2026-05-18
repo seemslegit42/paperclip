@@ -1,13 +1,13 @@
-import type { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
+import { Eye, Flag, X } from "lucide-react";
 import type { Issue, IssueRecoveryAction } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
-import { Eye, Flag, X } from "lucide-react";
+import { withIssueDetailHeaderSeed } from "../lib/issueDetailBreadcrumb";
+import { cn } from "../lib/utils";
 import {
   createIssueDetailPath,
   rememberIssueDetailLocationState,
-  withIssueDetailHeaderSeed,
 } from "../lib/issueDetailBreadcrumb";
-import { cn } from "../lib/utils";
 import { deriveActiveRecoveryDisplayState, RECOVERY_CHIP_DEFAULT_TONE } from "../lib/recovery-display";
 import { StatusIcon } from "./StatusIcon";
 import { productivityReviewTriggerLabel } from "./ProductivityReviewBadge";
@@ -64,14 +64,14 @@ export function IssueRow({
   const identifier = issue.identifier ?? issue.id.slice(0, 8);
   const showUnreadSlot = unreadState !== null;
   const showUnreadDot = unreadState === "visible" || unreadState === "fading";
-  const selectedStatusClass = selected ? "!text-muted-foreground !border-muted-foreground" : undefined;
+  const selectedStatusClass = selected ? "!text-roman-aqua/80 !border-roman-aqua/50" : undefined;
   const detailState = withIssueDetailHeaderSeed(issueLinkState, issue);
   const productivityReview = issue.productivityReview ?? null;
   const productivityReviewIndicator = productivityReview ? (
     <span
       className={cn(
-        "inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-300",
-        selected ? "border-muted-foreground text-muted-foreground" : null,
+        "inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-gilded-accent/40 bg-gilded-accent/10 text-gilded-accent",
+        selected ? "border-roman-aqua/50 text-roman-aqua" : null,
       )}
       title={`Productivity review: ${productivityReviewTriggerLabel(productivityReview.trigger)}`}
       aria-label="Productivity review open"
@@ -81,13 +81,13 @@ export function IssueRow({
   ) : null;
   const hasChecklistStep = checklistStepNumber !== null;
   const checklistStep = hasChecklistStep ? (
-    <span className="shrink-0 font-mono text-xs text-muted-foreground" aria-hidden="true">
+    <span className="shrink-0 font-scribe text-xs text-conchoidal-gray" aria-hidden="true">
       {checklistStepNumber}.
     </span>
   ) : null;
   const planningModeIndicator = issue.workMode === "planning" ? (
     <span
-      className="ml-1.5 inline-flex shrink-0 items-center rounded-full border border-amber-500/60 bg-amber-500/15 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-300"
+      className="ml-1.5 inline-flex shrink-0 items-center rounded-full border border-gilded-accent/60 bg-gilded-accent/15 px-2 py-0.5 text-[10px] font-scribe font-medium text-gilded-accent"
       title="This issue is in planning mode."
     >
       Planning
@@ -98,7 +98,7 @@ export function IssueRow({
   const parkedBlockerIndicator = hasAssignedBacklogBlocker(issue.blockedBy) ? (
     <span
       data-testid="issue-row-parked-blocker"
-      className="ml-1.5 inline-flex shrink-0 items-center gap-0.5 rounded-full border border-amber-500/60 bg-amber-500/15 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-300"
+      className="ml-1.5 inline-flex shrink-0 items-center gap-0.5 rounded-full border border-gilded-accent/60 bg-gilded-accent/15 px-2 py-0.5 text-[10px] font-scribe font-medium text-gilded-accent"
       title="Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee."
     >
       <Flag className="h-2.5 w-2.5" aria-hidden />
@@ -117,9 +117,9 @@ export function IssueRow({
       aria-current={checklistCurrentStep ? "step" : undefined}
       onClickCapture={() => rememberIssueDetailLocationState(issuePathId, detailState)}
       className={cn(
-        "group flex items-start gap-2 border-b border-border py-2.5 pl-2 pr-3 text-sm no-underline text-inherit transition-colors last:border-b-0 sm:items-center sm:py-2 sm:pl-1",
-        selected ? "hover:bg-transparent" : "hover:bg-accent/50",
-        checklistCurrentStep ? "border-l-2 border-l-primary bg-primary/5 pl-[calc(theme(spacing.2)-2px)] sm:pl-[calc(theme(spacing.1)-2px)]" : null,
+        "group flex items-start gap-2 border-b border-vitreous-white/5 py-2.5 pl-2 pr-3 text-sm no-underline text-inherit transition-all last:border-b-0 sm:items-center sm:py-2 sm:pl-1",
+        selected ? "bg-vitreous-white/5 border-l-2 border-l-roman-aqua" : "hover:bg-vitreous-white/5",
+        checklistCurrentStep ? "border-l-2 border-l-roman-aqua bg-roman-aqua/5 pl-[calc(theme(spacing.2)-2px)] sm:pl-[calc(theme(spacing.1)-2px)]" : null,
         className,
       )}
     >
@@ -131,7 +131,7 @@ export function IssueRow({
         {recoveryIndicator}
       </span>
       <span className="flex min-w-0 flex-1 flex-col gap-1 sm:contents">
-        <span className={cn("line-clamp-2 text-sm sm:order-2 sm:min-w-0 sm:flex-1 sm:truncate sm:line-clamp-none", titleClassName)}>
+        <span className={cn("line-clamp-2 text-sm font-scribe sm:order-2 sm:min-w-0 sm:flex-1 sm:truncate sm:line-clamp-none", titleClassName, selected && "text-vitreous-white font-medium")}>
           {issue.title}{titleSuffix}
         </span>
         {checklistDependencyChips ? (
@@ -150,7 +150,7 @@ export function IssueRow({
                 {productivityReviewIndicator}
               </span>
               {checklistStep}
-              <span className="shrink-0 font-mono text-xs text-muted-foreground">
+              <span className="shrink-0 font-scribe text-[10px] uppercase tracking-wider text-conchoidal-gray/70">
                 {identifier}
               </span>
               {planningModeIndicator}
@@ -160,10 +160,10 @@ export function IssueRow({
           )}
           {mobileMeta ? (
             <>
-              <span className="text-xs text-muted-foreground sm:hidden" aria-hidden="true">
+              <span className="text-xs text-conchoidal-gray sm:hidden" aria-hidden="true">
                 &middot;
               </span>
-              <span className="text-xs text-muted-foreground sm:hidden">{mobileMeta}</span>
+              <span className="text-xs text-conchoidal-gray sm:hidden">{mobileMeta}</span>
             </>
           ) : null}
         </span>
@@ -172,7 +172,7 @@ export function IssueRow({
         <span className="ml-auto hidden shrink-0 items-center gap-2 sm:order-3 sm:flex sm:gap-3">
           {desktopTrailing}
           {trailingMeta ? (
-            <span className="text-xs text-muted-foreground">{trailingMeta}</span>
+            <span className="text-xs text-conchoidal-gray">{trailingMeta}</span>
           ) : null}
         </span>
       ) : null}
@@ -186,23 +186,16 @@ export function IssueRow({
                 event.stopPropagation();
                 onMarkRead?.();
               }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  onMarkRead?.();
-                }
-              }}
               className={cn(
                 "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
-                selected ? "hover:bg-muted/80" : "hover:bg-blue-500/20",
+                selected ? "hover:bg-vitreous-white/10" : "hover:bg-roman-aqua/20",
               )}
               aria-label="Mark as read"
             >
               <span
                 className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
-                  selected ? "bg-muted-foreground/70" : "bg-blue-600 dark:bg-blue-400",
+                  selected ? "bg-roman-aqua" : "bg-roman-aqua",
                   unreadState === "fading" ? "opacity-0" : "opacity-100",
                 )}
               />
@@ -215,14 +208,8 @@ export function IssueRow({
                 event.stopPropagation();
                 onArchive();
               }}
-              onKeyDown={(event) => {
-                if (event.key !== "Enter" && event.key !== " ") return;
-                event.preventDefault();
-                event.stopPropagation();
-                onArchive();
-              }}
               disabled={archiveDisabled}
-              className="inline-flex h-4 w-4 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100 disabled:pointer-events-none disabled:opacity-30"
+              className="inline-flex h-4 w-4 items-center justify-center rounded-md text-conchoidal-gray opacity-0 transition-opacity hover:text-vitreous-white group-hover:opacity-100 disabled:pointer-events-none disabled:opacity-30"
               aria-label="Dismiss from inbox"
             >
               <X className="h-3.5 w-3.5" />
@@ -248,9 +235,9 @@ function renderRecoveryChip(action: IssueRecoveryAction, selected: boolean): Rea
       role="status"
       aria-label={tone.label}
       className={cn(
-        "ml-1.5 inline-flex shrink-0 items-center gap-0.5 rounded-full border px-2 py-0.5 text-[10px] font-medium",
+        "ml-1.5 inline-flex shrink-0 items-center gap-0.5 rounded-full border px-2 py-0.5 text-[10px] font-scribe font-medium",
         tone.className,
-        selected ? "!border-muted-foreground !text-muted-foreground" : null,
+        selected ? "!border-roman-aqua/50 !text-roman-aqua" : null,
       )}
       title={`${tone.label} — open the source issue to act.`}
     >

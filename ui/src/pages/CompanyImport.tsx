@@ -340,7 +340,7 @@ function deriveSourcePrefix(
   return null;
 }
 
-/** Generate a prefix-based rename: e.g. "gstack" + "CEO" → "gstack-CEO" */
+/** Generate a prefix-based rename: e.g. "gstack" + "BEEP" → "gstack-BEEP" */
 function prefixedName(prefix: string | null, originalName: string): string {
   if (!prefix) return originalName;
   return `${prefix}-${originalName}`;
@@ -691,7 +691,7 @@ export function CompanyImport() {
   const [adapterExpandedSlugs, setAdapterExpandedSlugs] = useState<Set<string>>(new Set());
   const [adapterConfigValues, setAdapterConfigValues] = useState<Record<string, CreateConfigValues>>({});
 
-  // Fetch current company agents to find CEO adapter type
+  // Fetch current company agents to find BEEP adapter type
   const { data: companyAgents } = useQuery({
     queryKey: selectedCompanyId ? queryKeys.agents.list(selectedCompanyId) : ["agents", "none"],
     queryFn: () => agentsApi.list(selectedCompanyId!),
@@ -761,7 +761,7 @@ export function CompanyImport() {
       setSkippedSlugs(new Set());
       setConfirmedSlugs(new Set());
 
-      // Initialize adapter overrides — default all agents to the CEO's adapter type
+      // Initialize adapter overrides — default all agents to the BEEP's adapter type
       const defaultAdapters: Record<string, string> = {};
       for (const agent of result.manifest.agents) {
         defaultAdapters[agent.slug] = ceoAdapterType;

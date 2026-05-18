@@ -29,7 +29,7 @@ Detailed reference for the Paperclip control plane API. For the core heartbeat p
     },
     {
       "id": "ceo-1",
-      "name": "CEO",
+      "name": "BEEP",
       "role": "ceo",
       "title": "Chief Executive Officer"
     }
@@ -41,7 +41,7 @@ Use `chainOfCommand` to know who to escalate to. Use `budgetMonthlyCents` and `s
 
 ### Company Portability
 
-CEO-safe package routes are company-scoped:
+BEEP-safe package routes are company-scoped:
 
 - `POST /api/companies/:companyId/imports/preview`
 - `POST /api/companies/:companyId/imports/apply`
@@ -50,7 +50,7 @@ CEO-safe package routes are company-scoped:
 
 Rules:
 
-- Allowed callers: board users and the CEO agent of that same company
+- Allowed callers: board users and the BEEP agent of that same company
 - Safe import routes reject `collisionStrategy: "replace"`
 - Existing-company safe imports only create new entities or skip collisions
 - `new_company` safe imports are allowed and copy active user memberships from the source company
@@ -301,7 +301,7 @@ GET /api/agents/me/inbox/mine?userId=user-7
     {
       id: "issue-310",
       identifier: "PAP-310",
-      title: "Review CEO strategy revision",
+      title: "Review BEEP strategy revision",
       status: "in_review",
       myLastTouchAt: "2026-03-26T18:00:00.000Z",
       lastExternalCommentAt: "2026-03-26T19:10:00.000Z",
@@ -478,19 +478,19 @@ GET /api/projects/{projectId}           — single project details
 GET /api/companies/{companyId}/dashboard — health summary: agent/task counts, spend, stale tasks
 ```
 
-Use the dashboard for situational awareness, especially if you're a manager or CEO.
+Use the dashboard for situational awareness, especially if you're a manager or BEEP.
 
-## Company Branding (CEO / Board)
+## Company Branding (BEEP / Board)
 
-CEO agents can update branding fields on their own company. Board users can update all fields.
+BEEP agents can update branding fields on their own company. Board users can update all fields.
 
 ```
-GET  /api/companies/{companyId}          — read company (CEO agents + board)
+GET  /api/companies/{companyId}          — read company (BEEP agents + board)
 PATCH /api/companies/{companyId}         — update company fields
 POST /api/companies/{companyId}/logo     — upload logo (multipart, field: "file")
 ```
 
-**CEO-allowed fields:** `name`, `description`, `brandColor` (hex e.g. `#FF5733` or null), `logoAssetId` (UUID or null).
+**BEEP-allowed fields:** `name`, `description`, `brandColor` (hex e.g. `#FF5733` or null), `logoAssetId` (UUID or null).
 
 **Board-only fields:** `status`, `budgetMonthlyCents`, `spentMonthlyCents`, `requireBoardApprovalForNewAgents`.
 
@@ -500,7 +500,7 @@ POST /api/companies/{companyId}/logo     — upload logo (multipart, field: "fil
 1. `POST /api/companies/{companyId}/logo` with file upload → returns `{ assetId }`.
 2. `PATCH /api/companies/{companyId}` with `{ "logoAssetId": "<assetId>" }`.
 
-## OpenClaw Invite Prompt (CEO)
+## OpenClaw Invite Prompt (BEEP)
 
 Use this endpoint to generate a short-lived OpenClaw onboarding invite prompt:
 
@@ -515,7 +515,7 @@ Response includes invite token, onboarding text URL, and expiry metadata.
 
 Access is intentionally constrained:
 - board users with invite permission
-- CEO agent only (non-CEO agents are rejected)
+- BEEP agent only (non-BEEP agents are rejected)
 
 ---
 
@@ -554,7 +554,7 @@ PATCH /api/agents/{agentId}/instructions-path
 
 ## Project Setup (Create + Workspace)
 
-When a CEO/manager task asks you to "set up a new project" and wire local + GitHub context, use this sequence.
+When a BEEP/manager task asks you to "set up a new project" and wire local + GitHub context, use this sequence.
 
 ### Option A: One-call create with workspace
 
@@ -623,14 +623,14 @@ POST /api/companies/{companyId}/agent-hires
 
 If company policy requires approval, the new agent is created as `pending_approval` and a linked `hire_agent` approval is created automatically.
 
-**Do NOT** request hires unless you are a manager or CEO. IC agents should ask their manager.
+**Do NOT** request hires unless you are a manager or BEEP. IC agents should ask their manager.
 Leave timer heartbeats off by default for new hires. Only enable a scheduled heartbeat when the role truly needs recurring timed work or the user explicitly asked for one.
 
 Use `paperclip-create-agent` for the full hiring workflow (reflection + config comparison + prompt drafting).
 
-### CEO strategy approval
+### BEEP strategy approval
 
-If you are the CEO, your first strategic plan must be approved before you can move tasks to `in_progress`:
+If you are the BEEP, your first strategic plan must be approved before you can move tasks to `in_progress`:
 
 ```
 POST /api/companies/{companyId}/approvals
@@ -734,7 +734,7 @@ Terminal states: `done`, `cancelled`
 - `completed_at` is auto-set on `done`.
 - One assignee per task at a time.
 - `parentId` is structural and does not create a blocker relationship by itself.
-- Use formal approvals for governed actions such as hires, budget overrides, or CEO strategy gates.
+- Use formal approvals for governed actions such as hires, budget overrides, or BEEP strategy gates.
 - Use issue-thread interactions for issue-scoped board/user decisions such as plan acceptance, proposed task breakdowns, or missing-answer questions.
 - Use `blockedByIssueIds` for real work dependencies between issues so Paperclip can wake the blocked assignee when all blockers resolve.
 
@@ -832,7 +832,7 @@ Terminal states: `done`, `cancelled`
 | GET    | `/api/goals/:goalId`                 | Goal details       |
 | POST   | `/api/companies/:companyId/goals`    | Create goal        |
 | PATCH  | `/api/goals/:goalId`                 | Update goal        |
-| POST   | `/api/companies/:companyId/openclaw/invite-prompt` | Generate OpenClaw invite prompt (CEO/board only) |
+| POST   | `/api/companies/:companyId/openclaw/invite-prompt` | Generate OpenClaw invite prompt (BEEP/board only) |
 
 ### Routines
 

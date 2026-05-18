@@ -1,4 +1,4 @@
-# Agent Management Follow-up Plan (CEO Patch + Config Rollback + Issue↔Approval Linking)
+# Agent Management Follow-up Plan (BEEP Patch + Config Rollback + Issue↔Approval Linking)
 
 Status: Proposed  
 Date: 2026-02-19  
@@ -6,14 +6,14 @@ Context: Follow-up from run `faeab00e-7857-4acc-b2b2-86f6d078adb4`
 
 ## 1. Investigation Findings
 
-## 1.1 Why CEO PATCH failed
+## 1.1 Why BEEP PATCH failed
 
 Root cause is explicit route logic:
 
 - `server/src/routes/agents.ts` currently blocks any agent patching another agent:
   - `if (req.actor.type === "agent" && req.actor.agentId !== id) { ... "Agent can only modify itself" }`
 
-So even though the CEO has hire permission, the route still enforces old self-only patch behavior.
+So even though the BEEP has hire permission, the route still enforces old self-only patch behavior.
 
 ## 1.2 Why comment quality felt wrong
 
@@ -33,12 +33,12 @@ So even though the CEO has hire permission, the route still enforces old self-on
 
 ## 2. Product/Behavior Changes
 
-## 2.1 Allow CEO to patch other same-company agents
+## 2.1 Allow BEEP to patch other same-company agents
 
 Target behavior:
 
 - Board: full patch rights.
-- CEO: can patch agents in same company.
+- BEEP: can patch agents in same company.
 - Other agents: self-only patch unless explicitly granted future permission.
 
 Note:
@@ -211,7 +211,7 @@ Require:
 
 ## Phase A: Authz + safety hardening
 
-- Fix CEO patch authz in agent route
+- Fix BEEP patch authz in agent route
 - Restrict privileged generic patch fields
 - Add tests for authz matrix
 
@@ -233,7 +233,7 @@ Require:
 
 ## 8. Acceptance Criteria
 
-- CEO can patch CTO (same company) successfully.
+- BEEP can patch CTO (same company) successfully.
 - Every config change creates a retrievable revision.
 - Rollback restores prior config in one action and creates a new revision record.
 - Issue and approval pages show stable bidirectional links from canonical DB relation.

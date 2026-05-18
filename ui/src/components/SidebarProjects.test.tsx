@@ -260,10 +260,10 @@ describe("SidebarProjects", () => {
     await renderSidebarProjects();
 
     const sectionMenuTrigger = container.querySelector('button[aria-label="Projects section actions"]');
-    expect(sectionMenuTrigger?.textContent).toContain("Projects");
+    expect(sectionMenuTrigger?.textContent).toContain("The Domains");
     expect(sectionMenuTrigger?.querySelector("svg")).toBeNull();
 
-    const newProjectButton = container.querySelector('button[aria-label="New project"]');
+    const newProjectButton = container.querySelector('button[aria-label="Establish Domain"]');
     expect(newProjectButton).toBeTruthy();
     await act(async () => {
       newProjectButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -276,7 +276,7 @@ describe("SidebarProjects", () => {
       .find((element) => element.textContent?.includes("New project"));
     expect(newProjectItem).toBeFalsy();
     const browseLink = Array.from(document.body.querySelectorAll("a"))
-      .find((element) => element.textContent?.includes("Browse projects"));
+      .find((element) => element.textContent?.includes("Observe Domains"));
     expect(browseLink?.getAttribute("href")).toBe("/projects");
   });
 

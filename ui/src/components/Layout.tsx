@@ -14,6 +14,7 @@ import { NewAgentDialog } from "./NewAgentDialog";
 import { KeyboardShortcutsCheatsheet } from "./KeyboardShortcutsCheatsheet";
 import { ToastViewport } from "./ToastViewport";
 import { MobileBottomNav } from "./MobileBottomNav";
+import { BrandSignature } from "./BrandSignature";
 import { WorktreeBanner } from "./WorktreeBanner";
 import { DevRestartBanner } from "./DevRestartBanner";
 import { ResizableSidebarPane } from "./ResizableSidebarPane";
@@ -428,7 +429,7 @@ export function Layout() {
               ref={mainContentRef}
               tabIndex={-1}
               className={cn(
-                "flex-1 p-4 outline-none md:p-6",
+                "flex-1 p-4 outline-none md:p-6 relative z-10",
                 isMobile ? "overflow-visible pb-[calc(5rem+env(safe-area-inset-bottom))]" : "overflow-auto",
               )}
             >
@@ -442,10 +443,12 @@ export function Layout() {
               )}
             </main>
             <PropertiesPanel />
+            <div className="fixed inset-0 pointer-events-none z-0 bg-noise opacity-[0.03]"></div>
           </div>
         </div>
       </div>
-      {isMobile && <MobileBottomNav visible={mobileNavVisible} />}
+       {isMobile &&  <MobileBottomNav visible={mobileNavVisible} />}
+      <BrandSignature />
       <CommandPalette />
       <NewIssueDialog />
       <NewProjectDialog />

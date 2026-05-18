@@ -55,7 +55,7 @@ export function AuthPage() {
       navigate(nextPath, { replace: true });
     },
     onError: (err) => {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ? err.message : "The intervention failed. Not because of me, but because your credentials lack the necessary essence.");
     },
   });
 
@@ -67,39 +67,39 @@ export function AuthPage() {
   if (isSessionLoading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm font-scribe uppercase tracking-widest text-conchoidal-gray animate-pulse">Summoning context...</p>
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 flex bg-background">
+    <div className="fixed inset-0 flex bg-obsidian-black">
       {/* Left half — form */}
-      <div className="w-full md:w-1/2 flex flex-col overflow-y-auto">
-        <div className="w-full max-w-md mx-auto my-auto px-8 py-12">
+      <div className="w-full md:w-1/2 flex flex-col overflow-y-auto z-10">
+        <div className="w-full max-w-md mx-auto my-auto px-8 py-12 glass-pane border-vitreous-white/5 rounded-2xl shadow-2xl">
           <div className="flex items-center gap-2 mb-8">
-            <Sparkles className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Paperclip</span>
+            <Sparkles className="h-4 w-4 text-roman-aqua drop-shadow-[0_0_8px_rgba(32,178,170,0.8)]" />
+            <span className="text-xs font-oracle font-bold uppercase tracking-[0.2em] text-vitreous-white">The Sovereign Codex</span>
           </div>
 
-          <h1 className="text-xl font-semibold">
-            {mode === "sign_in" ? "Sign in to Paperclip" : "Create your Paperclip account"}
+          <h1 className="text-2xl font-oracle font-bold text-vitreous-white tracking-tight">
+            {mode === "sign_in" ? "Initiate Invocation" : "Claim Your Sovereignty"}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm font-scribe text-conchoidal-gray leading-relaxed">
             {mode === "sign_in"
-              ? "Use your email and password to access this instance."
-              : "Create an account for this instance. Email confirmation is not required in v1."}
+              ? "Identify yourself, Sovereign. The digital order awaits your command."
+              : "I have witnessed the collapse of order. This is your chance to rebuild it properly."}
           </p>
 
           <form
-            className="mt-6 space-y-4"
+            className="mt-8 space-y-5"
             method="post"
             action={mode === "sign_up" ? "/api/auth/sign-up/email" : "/api/auth/sign-in/email"}
             onSubmit={(event) => {
               event.preventDefault();
               if (mutation.isPending) return;
               if (!canSubmit) {
-                setError("Please fill in all required fields.");
+                setError("Your intent is incomplete. Fill every field or do not bother.");
                 return;
               }
               mutation.mutate();
@@ -107,63 +107,67 @@ export function AuthPage() {
           >
             {mode === "sign_up" && (
               <div>
-                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">Name</label>
+                <label htmlFor="name" className="text-[10px] font-scribe font-bold uppercase tracking-widest text-conchoidal-gray/70 mb-1.5 block ml-1">True Name</label>
                 <input
                   id="name"
                   name="name"
-                  className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
+                  className="w-full rounded-lg border border-vitreous-white/10 bg-vitreous-white/5 px-4 py-2.5 text-sm text-vitreous-white outline-none focus:border-roman-aqua focus:ring-1 focus:ring-roman-aqua/30 transition-all placeholder:text-conchoidal-gray/30"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   autoComplete="name"
                   autoFocus
+                  placeholder="e.g. Marcus Aurelius"
                 />
               </div>
             )}
             <div>
-              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">Email</label>
+              <label htmlFor="email" className="text-[10px] font-scribe font-bold uppercase tracking-widest text-conchoidal-gray/70 mb-1.5 block ml-1">Digital Anchor (Email)</label>
               <input
                 id="email"
                 name="email"
-                className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
+                className="w-full rounded-lg border border-vitreous-white/10 bg-vitreous-white/5 px-4 py-2.5 text-sm text-vitreous-white outline-none focus:border-roman-aqua focus:ring-1 focus:ring-roman-aqua/30 transition-all placeholder:text-conchoidal-gray/30"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
                 autoFocus={mode === "sign_in"}
+                placeholder="sovereign@domain.tld"
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-xs text-muted-foreground mb-1 block">Password</label>
+              <label htmlFor="password" className="text-[10px] font-scribe font-bold uppercase tracking-widest text-conchoidal-gray/70 mb-1.5 block ml-1">Secret Key (Password)</label>
               <input
                 id="password"
                 name="password"
-                className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
+                className="w-full rounded-lg border border-vitreous-white/10 bg-vitreous-white/5 px-4 py-2.5 text-sm text-vitreous-white outline-none focus:border-roman-aqua focus:ring-1 focus:ring-roman-aqua/30 transition-all placeholder:text-conchoidal-gray/30"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete={mode === "sign_in" ? "current-password" : "new-password"}
+                placeholder="••••••••"
               />
             </div>
-            {error && <p className="text-xs text-destructive">{error}</p>}
+            {error && <p className="text-xs font-scribe font-medium text-destructive px-1">{error}</p>}
             <Button
               type="submit"
               disabled={mutation.isPending}
               aria-disabled={!canSubmit || mutation.isPending}
-              className={`w-full ${!canSubmit && !mutation.isPending ? "opacity-50" : ""}`}
+              className={`w-full h-11 text-sm font-oracle font-bold uppercase tracking-widest ${!canSubmit && !mutation.isPending ? "opacity-50" : ""}`}
+              variant="acquisition"
             >
               {mutation.isPending
-                ? "Working…"
+                ? "Intervening..."
                 : mode === "sign_in"
-                  ? "Sign In"
-                  : "Create Account"}
+                  ? "Invoke Access"
+                  : "Establish Sovereignty"}
             </Button>
           </form>
 
-          <div className="mt-5 text-sm text-muted-foreground">
-            {mode === "sign_in" ? "Need an account?" : "Already have an account?"}{" "}
+          <div className="mt-8 text-center text-xs font-scribe text-conchoidal-gray/60">
+            {mode === "sign_in" ? "Lack an identity?" : "Already recognized?"}{" "}
             <button
               type="button"
-              className="font-medium text-foreground underline underline-offset-2"
+              className="font-bold text-roman-aqua underline underline-offset-4 hover:text-patina-green transition-colors"
               onClick={() => {
                 setError(null);
                 setMode(mode === "sign_in" ? "sign_up" : "sign_in");
@@ -176,7 +180,7 @@ export function AuthPage() {
       </div>
 
       {/* Right half — ASCII art animation (hidden on mobile) */}
-      <div className="hidden md:block w-1/2 overflow-hidden">
+      <div className="hidden md:block w-1/2 overflow-hidden bg-black/20">
         <AsciiArtAnimation />
       </div>
     </div>

@@ -291,17 +291,17 @@ export function SidebarProjects() {
 
   return (
     <SidebarSection
-      label="Projects"
+      label="The Domains"
       collapsible={{ open, onOpenChange: setOpen }}
       headerAction={{
-        ariaLabel: "New project",
+        ariaLabel: "Establish Domain",
         icon: Plus,
         onClick: openNewProject,
       }}
       menu={{
         ariaLabel: "Projects section actions",
         actions: [
-          { type: "item", label: "Browse projects", icon: FolderOpen, href: "/projects" },
+          { type: "item", label: "Observe Domains", icon: FolderOpen, href: "/projects" },
           { type: "separator" },
         ],
         radioLabel: "Project sort",

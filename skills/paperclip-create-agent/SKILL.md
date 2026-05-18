@@ -17,7 +17,7 @@ You need either:
 - board access, or
 - agent permission `can_create_agents=true` in your company
 
-If you do not have this permission, escalate to your CEO or board.
+If you do not have this permission, escalate to your BEEP or board.
 
 ## Workflow
 

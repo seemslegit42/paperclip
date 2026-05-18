@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const SKIP_LLM = process.env.PAPERCLIP_E2E_SKIP_LLM !== "false";
 
-const AGENT_NAME = "CEO";
+const AGENT_NAME = "BEEP";
 const TASK_TITLE = "PAP-3413 planning mode evidence";
 
 test("captures planning mode UI for desktop and mobile", async ({ page }) => {
@@ -17,7 +17,7 @@ test("captures planning mode UI for desktop and mobile", async ({ page }) => {
   await page.getByRole("button", { name: "Next" }).click();
 
   await expect(page.locator("h3", { hasText: "Create your first agent" })).toBeVisible({ timeout: 30_000 });
-  await expect(page.locator('input[placeholder="CEO"]')).toHaveValue(AGENT_NAME);
+  await expect(page.locator('input[placeholder="BEEP"]')).toHaveValue(AGENT_NAME);
   await page.getByRole("button", { name: "Next" }).click();
 
   await expect(page.locator("h3", { hasText: "Give it something to do" })).toBeVisible({ timeout: 30_000 });

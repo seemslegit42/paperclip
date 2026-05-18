@@ -192,8 +192,8 @@ Minimum checks:
 - authenticated login works with the smoke credentials
 - the browser lands in onboarding on a fresh instance
 - company creation succeeds
-- the first CEO agent is created
-- the first CEO heartbeat run is triggered
+- the first BEEP agent is created
+- the first BEEP heartbeat run is triggered
 
 ## Rollback
 

@@ -1,8 +1,12 @@
-import type { ReactNode } from "react";
-import type { Issue } from "@paperclipai/shared";
-import { Columns3 } from "lucide-react";
-import { pickTextColorForPillBg } from "@/lib/color-contrast";
-import { Button } from "@/components/ui/button";
+import * as React from "react"
+import { ReactNode } from "react"
+import type { Issue } from "@paperclipai/shared"
+import { StatusIcon } from "./StatusIcon"
+import { cn } from "@/lib/utils"
+import { timeAgo } from "../lib/timeAgo"
+import { Identity } from "./Identity"
+import { pickTextColorForPillBg } from "../lib/color-contrast"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,122 +15,123 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { formatAssigneeUserLabel } from "../lib/assignees";
-import type { InboxIssueColumn } from "../lib/inbox";
-import { cn } from "../lib/utils";
-import { timeAgo } from "../lib/timeAgo";
-import { Identity } from "./Identity";
-import { StatusIcon } from "./StatusIcon";
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { ColumnsIcon } from "lucide-react"
 
-export const issueTrailingColumns: InboxIssueColumn[] = ["assignee", "project", "workspace", "parent", "labels", "updated"];
+export type InboxIssueColumn = "assignee" | "project" | "labels" | "workspace" | "parent" | "updated" | "id" | "status";
 
-const issueColumnLabels: Record<InboxIssueColumn, string> = {
-  status: "Status",
-  id: "ID",
+export const issueColumnLabels: Record<InboxIssueColumn, string> = {
   assignee: "Assignee",
   project: "Project",
+  labels: "Labels",
   workspace: "Workspace",
-  parent: "Parent issue",
-  labels: "Tags",
-  updated: "Last updated",
+  parent: "Parent",
+  updated: "Updated",
+  id: "ID",
+  status: "Status",
 };
 
-const issueColumnDescriptions: Record<InboxIssueColumn, string> = {
-  status: "Issue state chip on the left edge.",
-  id: "Ticket identifier like PAP-1009.",
-  assignee: "Assigned agent or board user.",
-  project: "Linked project pill with its color.",
-  workspace: "Execution or project workspace used for the issue.",
-  parent: "Parent issue identifier and title.",
-  labels: "Issue labels and tags.",
-  updated: "Latest visible activity time.",
+export const issueColumnDescriptions: Record<InboxIssueColumn, string> = {
+  assignee: "Who is handling the work",
+  project: "Associated project",
+  labels: "Classification tags",
+  workspace: "Execution context",
+  parent: "Primary issue",
+  updated: "Recency of activity",
+  id: "Issue identifier",
+  status: "Current state",
 };
 
-export function issueActivityText(issue: Issue): string {
-  return `Updated ${timeAgo(issue.lastActivityAt ?? issue.lastExternalCommentAt ?? issue.updatedAt)}`;
-}
+const ALL_ISSUE_TRAILING_COLUMNS: InboxIssueColumn[] = [
+  "assignee",
+  "project",
+  "labels",
+  "workspace",
+  "parent",
+  "updated",
+  "id",
+  "status",
+];
+
+export const issueTrailingColumns = ALL_ISSUE_TRAILING_COLUMNS;
 
 function issueTrailingGridTemplate(columns: InboxIssueColumn[]): string {
   return columns
-    .map((column) => {
-      if (column === "assignee") return "minmax(6rem, 8rem)";
-      if (column === "project") return "minmax(4.5rem, 7rem)";
-      if (column === "workspace") return "minmax(6rem, 9rem)";
-      if (column === "parent") return "minmax(3.5rem, 5.5rem)";
-      if (column === "labels") return "minmax(3rem, 6rem)";
-      return "minmax(3.5rem, 4.5rem)";
+    .map((c) => {
+      if (c === "updated") return "minmax(60px, auto)";
+      if (c === "labels") return "minmax(80px, 120px)";
+      if (c === "assignee") return "minmax(100px, 140px)";
+      return "minmax(80px, 1fr)";
     })
     .join(" ");
 }
 
+function formatAssigneeUserLabel(assigneeUserId: string | null, currentUserId: string | null): string | null {
+  if (!assigneeUserId) return null;
+  return assigneeUserId === currentUserId ? "Me" : "User";
+}
+
 export function IssueColumnPicker({
+  title,
   availableColumns,
   visibleColumnSet,
   onToggleColumn,
   onResetColumns,
-  title,
   iconOnly = false,
 }: {
-  availableColumns: InboxIssueColumn[];
-  visibleColumnSet: ReadonlySet<InboxIssueColumn>;
-  onToggleColumn: (column: InboxIssueColumn, enabled: boolean) => void;
-  onResetColumns: () => void;
   title: string;
+  availableColumns: InboxIssueColumn[];
+  visibleColumnSet: Set<InboxIssueColumn>;
+  onToggleColumn: (column: InboxIssueColumn, visible: boolean) => void;
+  onResetColumns: () => void;
   iconOnly?: boolean;
 }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant={iconOnly ? "outline" : "ghost"}
-          size={iconOnly ? "icon" : "sm"}
-          className={iconOnly ? "h-8 w-8 shrink-0" : "hidden h-8 shrink-0 px-2 text-xs sm:inline-flex"}
-          title="Columns"
-        >
-          <Columns3 className={iconOnly ? "h-3.5 w-3.5" : "mr-1 h-3.5 w-3.5"} />
+        <Button variant="ghost" size={iconOnly ? "icon-xs" : "xs"} className="h-7 text-conchoidal-gray hover:text-vitreous-white" title={iconOnly ? "Observe Columns" : undefined}>
+          <ColumnsIcon className={iconOnly ? "h-3.5 w-3.5" : "mr-1 h-3.5 w-3.5"} />
           {!iconOnly && "Columns"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[300px] rounded-xl border-border/70 p-1.5 shadow-xl shadow-black/10">
+      <DropdownMenuContent align="end" className="w-[300px] glass-pane border-vitreous-white/10 p-1.5 shadow-2xl">
         <DropdownMenuLabel className="px-2 pb-1 pt-1.5">
           <div className="space-y-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+            <div className="text-[10px] font-oracle font-bold uppercase tracking-[0.22em] text-roman-aqua">
               Desktop issue rows
             </div>
-            <div className="text-sm font-medium text-foreground">
+            <div className="text-sm font-scribe font-medium text-vitreous-white">
               {title}
             </div>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-vitreous-white/10" />
         {availableColumns.map((column) => (
           <DropdownMenuCheckboxItem
             key={column}
             checked={visibleColumnSet.has(column)}
             onSelect={(event) => event.preventDefault()}
             onCheckedChange={(checked) => onToggleColumn(column, checked === true)}
-            className="items-start rounded-lg px-3 py-2.5 pl-8"
+            className="items-start rounded-lg px-3 py-2.5 pl-8 focus:bg-vitreous-white/10"
           >
-            <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium text-foreground">
+            <span className="flex flex-col gap-0.5 font-scribe">
+              <span className="text-sm font-medium text-vitreous-white">
                 {issueColumnLabels[column]}
               </span>
-              <span className="text-xs leading-relaxed text-muted-foreground">
+              <span className="text-[10px] uppercase tracking-wider text-conchoidal-gray/70">
                 {issueColumnDescriptions[column]}
               </span>
             </span>
           </DropdownMenuCheckboxItem>
         ))}
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-vitreous-white/10" />
         <DropdownMenuItem
           onSelect={onResetColumns}
-          className="rounded-lg px-3 py-2 text-sm"
+          className="rounded-lg px-3 py-2 text-sm font-scribe text-roman-aqua hover:bg-roman-aqua/10"
         >
           Reset defaults
-          <span className="ml-auto text-xs text-muted-foreground">status, id, updated</span>
+          <span className="ml-auto text-[10px] text-conchoidal-gray opacity-50 uppercase tracking-tight">status, id, updated</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -156,12 +161,12 @@ export function InboxIssueMetaLeading({
         </span>
       ) : null}
       {checklistStepNumber !== null ? (
-        <span className="shrink-0 font-mono text-xs text-muted-foreground" aria-hidden="true">
+        <span className="shrink-0 font-scribe text-xs text-conchoidal-gray" aria-hidden="true">
           {checklistStepNumber}.
         </span>
       ) : null}
       {showIdentifier ? (
-        <span className="shrink-0 font-mono text-xs text-muted-foreground">
+        <span className="shrink-0 font-scribe text-[10px] uppercase tracking-widest text-conchoidal-gray/70">
           {issue.identifier ?? issue.id.slice(0, 8)}
         </span>
       ) : null}
@@ -169,22 +174,22 @@ export function InboxIssueMetaLeading({
         <span
           className={cn(
             "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 sm:gap-1.5 sm:px-2",
-            "bg-blue-500/10",
+            "bg-roman-aqua/10 border border-roman-aqua/20 backdrop-blur-sm",
           )}
         >
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-blue-400 opacity-75" />
+            <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-roman-aqua opacity-75" />
             <span
               className={cn(
                 "relative inline-flex h-2 w-2 rounded-full",
-                "bg-blue-500",
+                "bg-roman-aqua shadow-[0_0_8px_rgba(32,178,170,0.8)]",
               )}
             />
           </span>
           <span
             className={cn(
-              "hidden text-[11px] font-medium sm:inline",
-              "text-blue-600 dark:text-blue-400",
+              "hidden text-[10px] font-scribe font-bold uppercase tracking-widest sm:inline",
+              "text-roman-aqua",
             )}
           >
             Live
@@ -231,7 +236,7 @@ export function InboxIssueTrailingColumns({
 
   return (
     <span
-      className="grid items-center gap-2"
+      className="grid items-center gap-2 font-scribe"
       style={{ gridTemplateColumns: issueTrailingGridTemplate(columns) }}
     >
       {columns.map((column) => {
@@ -242,7 +247,7 @@ export function InboxIssueTrailingColumns({
 
           if (issue.assigneeAgentId) {
             return (
-              <span key={column} className="min-w-0 text-xs text-foreground">
+              <span key={column} className="min-w-0 text-xs text-vitreous-white">
                 <Identity
                   name={assigneeName ?? issue.assigneeAgentId.slice(0, 8)}
                   size="sm"
@@ -254,7 +259,7 @@ export function InboxIssueTrailingColumns({
 
           if (issue.assigneeUserId) {
             return (
-              <span key={column} className="min-w-0 text-xs text-foreground">
+              <span key={column} className="min-w-0 text-xs text-vitreous-white">
                 <Identity
                   name={userLabel}
                   avatarUrl={assigneeUserAvatarUrl}
@@ -266,7 +271,7 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
+            <span key={column} className="min-w-0 truncate text-[10px] uppercase tracking-wider text-conchoidal-gray/50">
               Unassigned
             </span>
           );
@@ -278,12 +283,12 @@ export function InboxIssueTrailingColumns({
             return (
               <span
                 key={column}
-                className="inline-flex min-w-0 items-center gap-2 text-xs font-medium"
+                className="inline-flex min-w-0 items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
                 style={{ color: pickTextColorForPillBg(accentColor, 0.12) }}
               >
                 <span
                   className="h-1.5 w-1.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: accentColor }}
+                  style={{ backgroundColor: accentColor, boxShadow: `0 0 8px ${accentColor}80` }}
                 />
                 <span className="truncate">{projectName}</span>
               </span>
@@ -291,7 +296,7 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
+            <span key={column} className="min-w-0 truncate text-[10px] uppercase tracking-wider text-conchoidal-gray/50">
               No project
             </span>
           );
@@ -304,18 +309,18 @@ export function InboxIssueTrailingColumns({
                 {(issue.labels ?? []).slice(0, 2).map((label) => (
                   <span
                     key={label.id}
-                    className="inline-flex min-w-0 max-w-full shrink-0 items-center rounded-full border px-1.5 py-0 text-[10px] font-medium"
+                    className="inline-flex min-w-0 max-w-full shrink-0 items-center rounded-full border px-1.5 py-0 text-[9px] font-bold uppercase tracking-tight backdrop-blur-md"
                     style={{
-                      borderColor: label.color,
+                      borderColor: `${label.color}40`,
                       color: pickTextColorForPillBg(label.color, 0.12),
-                      backgroundColor: `${label.color}1f`,
+                      backgroundColor: `${label.color}15`,
                     }}
                   >
                     <span className="truncate">{label.name}</span>
                   </span>
                 ))}
                 {(issue.labels ?? []).length > 2 ? (
-                  <span className="shrink-0 text-[10px] font-medium text-muted-foreground">
+                  <span className="shrink-0 text-[9px] font-bold text-conchoidal-gray opacity-60">
                     +{(issue.labels ?? []).length - 2}
                   </span>
                 ) : null}
@@ -332,13 +337,13 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
+            <span key={column} className="min-w-0 truncate text-[10px] uppercase tracking-widest text-conchoidal-gray">
               {workspaceId && onFilterWorkspace ? (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       type="button"
-                      className="truncate rounded-sm text-left text-xs text-muted-foreground transition-colors hover:text-foreground hover:underline"
+                      className="truncate rounded-sm text-left text-[10px] uppercase tracking-widest text-conchoidal-gray transition-colors hover:text-roman-aqua hover:underline"
                       onClick={(event) => {
                         event.preventDefault();
                         event.stopPropagation();
@@ -348,7 +353,7 @@ export function InboxIssueTrailingColumns({
                       {workspaceName}
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" sideOffset={6}>
+                  <TooltipContent side="top" sideOffset={6} className="glass-pane border-vitreous-white/10 text-vitreous-white">
                     Filter by workspace
                   </TooltipContent>
                 </Tooltip>
@@ -365,11 +370,11 @@ export function InboxIssueTrailingColumns({
           }
 
           return (
-            <span key={column} className="min-w-0 truncate text-xs text-muted-foreground" title={parentTitle ?? undefined}>
+            <span key={column} className="min-w-0 truncate text-[10px] uppercase tracking-widest text-conchoidal-gray/70" title={parentTitle ?? undefined}>
               {parentIdentifier ? (
-                <span className="font-mono">{parentIdentifier}</span>
+                <span className="font-mono text-roman-aqua/80">{parentIdentifier}</span>
               ) : (
-                <span className="italic">Sub-issue</span>
+                <span className="italic opacity-50">Sub-issue</span>
               )}
             </span>
           );
@@ -377,7 +382,7 @@ export function InboxIssueTrailingColumns({
 
         if (column === "updated") {
           return (
-            <span key={column} className="min-w-0 truncate text-right text-[11px] font-medium text-muted-foreground">
+            <span key={column} className="min-w-0 truncate text-right text-[10px] font-bold uppercase tracking-tighter text-conchoidal-gray/60">
               {activityText}
             </span>
           );
@@ -388,3 +393,6 @@ export function InboxIssueTrailingColumns({
     </span>
   );
 }
+
+export { InboxIssueTrailingColumns as issueTrailingColumnsComponent };
+export { timeAgo as issueActivityText };

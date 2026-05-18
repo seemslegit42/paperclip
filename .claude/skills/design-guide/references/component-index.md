@@ -147,7 +147,7 @@ Always use in a responsive grid: `grid md:grid-cols-2 xl:grid-cols-4 gap-4`.
 
 ```tsx
 <Identity name="Agent Alpha" size="sm" />
-<Identity name="CEO Agent" />
+<Identity name="BEEP Agent" />
 <Identity name="Backend Service" size="lg" avatarUrl="/img/bot.png" />
 ```
 

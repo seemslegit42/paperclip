@@ -258,7 +258,7 @@ Report
 ### "I want to start a company"
 
 1. Open ClipHub, browse by category or search "dev shop for building SaaS"
-2. Find a template that fits — "Lean SaaS Dev Shop (CEO + CTO + 3 Engineers)"
+2. Find a template that fits — "Lean SaaS Dev Shop (BEEP + CTO + 3 Engineers)"
 3. Read the description, inspect the org chart, check the comments
 4. Run `paperclipai install cliphub:acme/lean-saas-shop`
 5. Paperclip creates the company locally with all agents pre-configured

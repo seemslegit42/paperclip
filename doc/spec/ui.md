@@ -132,7 +132,7 @@ Section header: **Work** (collapsible, with a chevron toggle)
 - **Issues** — main task list for the selected company. This is the workhorse view.
 - **Projects** — project list. Projects group issues and link to goals.
 - **Goals** — company goal hierarchy.
-- **Views** — saved filter/sort configurations (e.g., "Critical bugs", "Unassigned tasks", "CEO's tasks"). Users can create, name, and pin custom views here.
+- **Views** — saved filter/sort configurations (e.g., "Critical bugs", "Unassigned tasks", "BEEP's tasks"). Users can create, name, and pin custom views here.
 
 ### 3.4 Company Section
 
@@ -583,7 +583,7 @@ Interactive visualization of the agent reporting hierarchy.
 
 ```
                     ┌─────────┐
-                    │ CEO     │
+                    │ BEEP     │
                     │ running │
                     └────┬────┘
             ┌────────────┼────────────┐
@@ -622,7 +622,7 @@ Nodes are clickable to navigate to agent detail.
 ┌─────────────────────────────────────────────────────────────────┐
 │ Agents                                          [+ New agent]   │
 ├─────────────────────────────────────────────────────────────────┤
-│ [🤖] CEO           ceo        ● Running   $45.20/$100   2m ago │
+│ [🤖] BEEP           ceo        ● Running   $45.20/$100   2m ago │
 │ [🤖] CTO           cto        ● Active    $23.10/$100   5m ago │
 │ [🤖] Dev-1         engineer   ○ Idle      $12.40/$50   15m ago │
 │ [🤖] CMO           marketing  ○ Idle      $8.30/$50    30m ago │
@@ -660,7 +660,7 @@ Clicking a row navigates to agent detail.
 
 ## 11. Approvals (Contextual, Not Standalone)
 
-Approvals are governance gates — decisions the board must make (hire an agent, approve a CEO strategy). They are NOT work items. Their data model stays separate from issues (different status machine, side-effect triggers, unstructured payload). But they don't need their own top-level nav entry.
+Approvals are governance gates — decisions the board must make (hire an agent, approve a BEEP strategy). They are NOT work items. Their data model stays separate from issues (different status machine, side-effect triggers, unstructured payload). But they don't need their own top-level nav entry.
 
 ### 11.1 Where Approvals Surface
 
@@ -669,8 +669,8 @@ Approvals are governance gates — decisions the board must make (hire an agent,
 **2. Dashboard metric card.** The "Pending Approvals" card shows the count and links to the full approvals list.
 
 **3. Inline on entity pages.** When an entity was created via an approval, the detail page shows a contextual banner:
-- Agent detail page: `"Hired via approval — requested by CEO on Feb 15"` with a link to the approval record.
-- An agent in `pending` status (not yet created) could show: `"Pending approval — requested by CEO"` with approve/reject actions inline.
+- Agent detail page: `"Hired via approval — requested by BEEP on Feb 15"` with a link to the approval record.
+- An agent in `pending` status (not yet created) could show: `"Pending approval — requested by BEEP"` with approve/reject actions inline.
 
 **4. Activity log.** Approval events (created, approved, rejected) appear in the activity timeline like any other event.
 
@@ -682,8 +682,8 @@ This page still exists — it's the "See all" destination from Inbox and Dashboa
 ┌─────────────────────────────────────────────────────────┐
 │ Approvals    [Pending] [Approved] [Rejected] [All]      │
 ├─────────────────────────────────────────────────────────┤
-│ 🟡 Hire Agent: "Marketing Analyst"    CEO    2h ago     │
-│ 🟡 CEO Strategy: "Q2 Growth Plan"    CEO    4h ago     │
+│ 🟡 Hire Agent: "Marketing Analyst"    BEEP    2h ago     │
+│ 🟡 BEEP Strategy: "Q2 Growth Plan"    BEEP    4h ago     │
 │ 🟢 Hire Agent: "DevOps Engineer"     CTO    1d ago     │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -734,7 +734,7 @@ Right pane: Type, Status, Requested by, Requested at, Decided by, Decided at, De
 │                                                         │
 │ By Agent                              By Project        │
 │ ┌──────────────────────┐  ┌──────────────────────┐      │
-│ │ CEO        $45.20    │  │ Auth       $67.30    │      │
+│ │ BEEP        $45.20    │  │ Auth       $67.30    │      │
 │ │ CTO        $23.10    │  │ Marketing  $34.50    │      │
 │ │ Dev-1      $12.40    │  │ API v2     $12.00    │      │
 │ │ ...                  │  │ ...                  │      │
@@ -742,7 +742,7 @@ Right pane: Type, Status, Requested by, Requested at, Decided by, Decided at, De
 │                                                         │
 │ Recent Cost Events                                      │
 │ ┌──────────────────────────────────────────────────────┐│
-│ │ CEO  openai/gpt-5  1,234 in / 567 out  $0.89  2m ago│
+│ │ BEEP  openai/gpt-5  1,234 in / 567 out  $0.89  2m ago│
 │ │ ...                                                   │
 │ └──────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────┘
@@ -764,7 +764,7 @@ A chronological, filterable audit trail.
 ┌─────────────────────────────────────────────────────────┐
 │ Activity                            [Filter by type ▼]  │
 ├─────────────────────────────────────────────────────────┤
-│ 🤖 CEO created issue CLIP-12 "Fix auth"      2 min ago │
+│ 🤖 BEEP created issue CLIP-12 "Fix auth"      2 min ago │
 │ 👤 Board approved hire "Marketing Analyst"    5 min ago │
 │ 🤖 CTO changed CLIP-8 status → In Progress  10 min ago │
 │ ⚙  System paused agent DevOps (budget limit) 15 min ago│
@@ -793,17 +793,17 @@ The inbox is the board operator's primary action center. It aggregates everythin
 ├─────────────────────────────────────────────────────────┤
 │ APPROVALS                        See all approvals →    │
 │ ● 🛡 Hire Agent: "Marketing Analyst"                    │
-│ │  Requested by CEO · 2h ago                            │
+│ │  Requested by BEEP · 2h ago                            │
 │ │  Role: marketing · Reports to: CMO · Budget: $100/mo  │
 │ │  [✕ Reject]  [✓ Approve]                              │
 │ │                                                       │
-│ ● 🛡 CEO Strategy: "Q2 Growth Plan"                     │
-│ │  Requested by CEO · 4h ago                            │
+│ ● 🛡 BEEP Strategy: "Q2 Growth Plan"                     │
+│ │  Requested by BEEP · 4h ago                            │
 │ │  [View details →]                                     │
 │                                                         │
 │ ALERTS                                                  │
 │ ● 🔴 Agent Error: DevOps heartbeat failed       1h ago  │
-│ ● ⚠  Budget Alert: CEO at 80% monthly budget   3h ago  │
+│ ● ⚠  Budget Alert: BEEP at 80% monthly budget   3h ago  │
 │                                                         │
 │ STALE WORK                                              │
 │   ⏰ CLIP-3 "Set up CI pipeline" — no update in 24h     │
@@ -848,7 +848,7 @@ Global search accessible via `Cmd+K` or the sidebar search icon.
 ├─────────────────────────────────────────────────────────┤
 │ Recent                                                  │
 │   📋 CLIP-42 Fix user authentication bug                │
-│   🤖 CEO                                                │
+│   🤖 BEEP                                                │
 │   📁 Auth project                                       │
 ├─────────────────────────────────────────────────────────┤
 │ Actions                                                 │

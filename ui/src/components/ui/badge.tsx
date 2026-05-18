@@ -5,19 +5,18 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-[10px] font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 transition-all backdrop-blur-sm",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary:
-          "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive:
-          "bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        ghost: "[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 [a&]:hover:underline",
+        default: "bg-imperial-purple/20 text-vitreous-white border-imperial-purple/30",
+        secondary: "bg-patina-green/20 text-patina-green border-patina-green/30",
+        destructive: "bg-destructive/20 text-destructive border-destructive/30",
+        outline: "border-vitreous-white/20 text-conchoidal-gray bg-transparent",
+        ghost: "bg-transparent text-conchoidal-gray hover:bg-vitreous-white/10",
+        link: "text-roman-aqua underline-offset-4 hover:underline border-transparent bg-transparent",
+        roman: "bg-roman-aqua/20 text-roman-aqua border-roman-aqua/30",
+        gilded: "bg-gilded-accent/20 text-gilded-accent border-gilded-accent/30",
       },
     },
     defaultVariants: {

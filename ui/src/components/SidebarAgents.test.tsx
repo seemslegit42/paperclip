@@ -241,10 +241,10 @@ describe("SidebarAgents", () => {
     await renderSidebarAgents();
 
     const sectionMenuTrigger = container.querySelector('button[aria-label="Agents section actions"]');
-    expect(sectionMenuTrigger?.textContent).toContain("Agents");
+    expect(sectionMenuTrigger?.textContent).toContain("The Sentinels");
     expect(sectionMenuTrigger?.querySelector("svg")).toBeNull();
 
-    const newAgentButton = container.querySelector('button[aria-label="New agent"]');
+    const newAgentButton = container.querySelector('button[aria-label="Summon Sentinel"]');
     expect(newAgentButton).toBeTruthy();
     await act(async () => {
       newAgentButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -257,7 +257,7 @@ describe("SidebarAgents", () => {
       .find((element) => element.textContent?.includes("New agent"));
     expect(newAgentItem).toBeFalsy();
     const browseLink = Array.from(document.body.querySelectorAll("a"))
-      .find((element) => element.textContent?.includes("Browse agents"));
+      .find((element) => element.textContent?.includes("Observe Sentinels"));
     expect(browseLink?.getAttribute("href")).toBe("/agents/all");
   });
 

@@ -1,4 +1,4 @@
-# CEO Agent Creation and Hiring Governance Plan (V1.1)
+# BEEP Agent Creation and Hiring Governance Plan (V1.1)
 
 Status: Proposed  
 Date: 2026-02-19  
@@ -6,10 +6,10 @@ Owner: Product + Server + UI + Skills
 
 ## 1. Goal
 
-Enable a CEO agent to create new agents directly, with lightweight but explicit governance:
+Enable a BEEP agent to create new agents directly, with lightweight but explicit governance:
 
 - Company-level toggle: new hires require board approval (default ON).
-- Agent-level permission: `can_create_agents` (default ON for CEO, OFF for everyone else).
+- Agent-level permission: `can_create_agents` (default ON for BEEP, OFF for everyone else).
 - Clear hire workflow with draft/limbo state until approval.
 - Config reflection so hiring agents can inspect available adapter configuration and compare existing agent configs (including self).
 - Approval collaboration flow with comments, revision requests, and audit trail.
@@ -43,13 +43,13 @@ Introduce lightweight permission model with one explicit permission now:
 
 Defaults:
 
-- CEO: `true`
+- BEEP: `true`
 - Everyone else: `false`
 
 Authority:
 
 - Board can edit permissions for any agent.
-- CEO can edit permissions for agents in same company.
+- BEEP can edit permissions for agents in same company.
 
 No broader RBAC system in this phase.
 
@@ -130,7 +130,7 @@ Rules:
 
 - Board always passes.
 - Agent passes `can_create_agents` check if self permission true and same company.
-- Permission management by CEO or board.
+- Permission management by BEEP or board.
 
 ## 5.2 Hire creation flow
 
@@ -150,7 +150,7 @@ Behavior:
   - create agent as `idle`
   - no approval record required
 
-Board may continue using direct create route, but this route becomes canonical for CEO/agent-led hiring.
+Board may continue using direct create route, but this route becomes canonical for BEEP/agent-led hiring.
 
 ## 5.3 Approval workflow endpoints
 
@@ -187,7 +187,7 @@ Add permission-gated config-read endpoints:
 Access:
 
 - board
-- CEO
+- BEEP
 - any agent with `can_create_agents`
 
 Security:
@@ -218,7 +218,7 @@ Per-adapter file includes:
 
 Auth:
 
-- same gate as config-read endpoints (board/CEO/`can_create_agents`).
+- same gate as config-read endpoints (board/BEEP/`can_create_agents`).
 
 ## 6. Adapter Protocol Extension
 
@@ -246,14 +246,14 @@ Not shown in onboarding flow.
 
 ## 7.2 Agent permissions UI
 
-In Agent Detail (board/CEO context):
+In Agent Detail (board/BEEP context):
 
 - permissions section
 - toggle for "Can create new agents"
 
 ## 7.3 Hire UX
 
-Add "Hire Agent" flow (for CEO/authorized agents):
+Add "Hire Agent" flow (for BEEP/authorized agents):
 
 - choose role/name/title/reportsTo
 - compose initial prompt/capabilities

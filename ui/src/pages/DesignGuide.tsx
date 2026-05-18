@@ -208,7 +208,7 @@ export function DesignGuide() {
         </p>
         <div className="grid gap-6 md:grid-cols-2">
           <SubSection title="UI primitives">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sigil-pulse">
               {[
                 "avatar", "badge", "breadcrumb", "button", "card", "checkbox", "collapsible",
                 "command", "dialog", "dropdown-menu", "input", "label", "popover", "scroll-area",
@@ -221,7 +221,7 @@ export function DesignGuide() {
             </div>
           </SubSection>
           <SubSection title="App components">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sigil-pulse">
               {[
                 "StatusBadge", "StatusIcon", "PriorityIcon", "EntityRow", "EmptyState", "MetricCard",
                 "FilterBar", "InlineEditor", "PageSkeleton", "Identity", "CommentThread", "MarkdownEditor",
@@ -443,7 +443,7 @@ export function DesignGuide() {
         <SubSection title="Agent status dots">
           <div className="flex items-center gap-4 flex-wrap">
             {(["running", "active", "paused", "error", "archived"] as const).map((label) => (
-              <div key={label} className="flex items-center gap-2">
+              <div key={label} className="flex items-center gap-2 sigil-pulse">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className={`inline-flex h-full w-full rounded-full ${agentStatusDot[label] ?? agentStatusDotDefault}`} />
                 </span>
@@ -500,15 +500,15 @@ export function DesignGuide() {
 
           <SubSection title="Checkbox & Label">
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 sigil-pulse">
                 <Checkbox id="check1" defaultChecked />
                 <Label htmlFor="check1">Checked item</Label>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 sigil-pulse">
                 <Checkbox id="check2" />
                 <Label htmlFor="check2">Unchecked item</Label>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 sigil-pulse">
                 <Checkbox id="check3" disabled />
                 <Label htmlFor="check3">Disabled item</Label>
               </div>
@@ -775,7 +775,7 @@ export function DesignGuide() {
             <CardContent>
               <p className="text-sm">Card content goes here. This is the main body area.</p>
             </CardContent>
-            <CardFooter className="gap-2">
+            <CardFooter className="gap-2 sigil-pulse">
               <Button size="sm">Action</Button>
               <Button variant="outline" size="sm">Cancel</Button>
             </CardFooter>
@@ -958,8 +958,8 @@ export function DesignGuide() {
         </SubSection>
 
         <SubSection title="Initials derivation">
-          <div className="flex flex-col gap-2">
-            <Identity name="CEO Agent" size="sm" />
+          <div className="flex flex-col gap-2 sigil-pulse">
+            <Identity name="BEEP Agent" size="sm" />
             <Identity name="Alpha" size="sm" />
             <Identity name="Quality Assurance Lead" size="sm" />
           </div>
@@ -1310,8 +1310,8 @@ export function DesignGuide() {
           ].map(([name, Icon]) => {
             const LucideIcon = Icon as React.FC<{ className?: string }>;
             return (
-              <div key={name as string} className="flex flex-col items-center gap-1.5 p-2">
-                <LucideIcon className="h-4 w-4 text-muted-foreground" />
+              <div key={name as string} className="flex flex-col items-center gap-1.5 p-2 sigil-pulse">
+                <LucideIcon className="h-4 w-4 text-roman-aqua filter drop-shadow-[0_0_2px_rgba(32,178,170,0.8)] text-muted-foreground" />
                 <span className="text-[10px] text-muted-foreground font-mono">{name as string}</span>
               </div>
             );

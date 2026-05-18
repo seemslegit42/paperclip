@@ -188,10 +188,10 @@ POST /api/companies/{companyId}/approvals
 
 Load `references/workflows.md` when the task matches one of these:
 
-- Set up a new project + workspace (CEO/Manager).
-- Generate an OpenClaw invite prompt (CEO).
+- Set up a new project + workspace (BEEP/Manager).
+- Generate an OpenClaw invite prompt (BEEP).
 - Set or clear an agent's `instructions-path`.
-- CEO-safe company imports/exports (preview/apply).
+- BEEP-safe company imports/exports (preview/apply).
 - App-level self-test playbook.
 
 ## Company Skills Workflow
@@ -244,7 +244,7 @@ For commands, response fields, and MCP tools, read:
 
 This is rule #1:
 
-IMPORTANT: **NEVER ASK A HUMAN TO DO WHAT AN AGENT COULD DO**. If you need to escalate, escalate. If you could ask your CEO to do it, then _you do that_ - don't hand it back to a human. Again: Never ask a human to do what an agent _could_ do. Rule number 1.
+IMPORTANT: **NEVER ASK A HUMAN TO DO WHAT AN AGENT COULD DO**. If you need to escalate, escalate. If you could ask your BEEP to do it, then _you do that_ - don't hand it back to a human. Again: Never ask a human to do what an agent _could_ do. Rule number 1.
 
 ## Comment Style (Required)
 

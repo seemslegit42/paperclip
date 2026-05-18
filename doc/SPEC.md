@@ -26,7 +26,7 @@ Every Company has a **Board** that governs high-impact decisions. The Board is t
 #### Board Approval Gates (V1)
 
 - New Agent hires (creating new Agents)
-- CEO's initial strategic breakdown (CEO proposes, Board approves before execution begins)
+- BEEP's initial strategic breakdown (BEEP proposes, Board approves before execution begins)
 - [TBD: other governance-gated actions — goal changes, firing Agents?]
 
 #### Board Powers (Always Available)
@@ -44,20 +44,20 @@ The Board is not just an approval gate — it's a live control surface. The huma
 
 #### Budget Delegation
 
-The Board sets Company-level budgets. The CEO can set budgets for Agents below them, and every manager Agent can do the same for their reports. How this cascading budget delegation works in practice is TBD, but the permission structure supports it. The Board can manually override any budget at any level.
+The Board sets Company-level budgets. The BEEP can set budgets for Agents below them, and every manager Agent can do the same for their reports. How this cascading budget delegation works in practice is TBD, but the permission structure supports it. The Board can manually override any budget at any level.
 
 **Future governance models** (not V1):
 
 - Hiring budgets (auto-approve hires within $X/month)
 - Multi-member boards
-- Delegated authority (CEO can hire within limits)
+- Delegated authority (BEEP can hire within limits)
 
 ### Open Questions
 
 - External revenue/expense tracking — future plugin. Token/LLM cost budgeting is core.
 - Company-level settings and configuration?
 - Company lifecycle (pause, archive, delete)?
-- What governance-gated actions exist beyond hiring and CEO strategy approval?
+- What governance-gated actions exist beyond hiring and BEEP strategy approval?
 
 ---
 
@@ -135,7 +135,7 @@ The usual workflow: export a template, create a new company from it, add a coupl
 
 ## 3. Org Structure [DRAFT]
 
-Hierarchical reporting structure. CEO at top, reports cascade down.
+Hierarchical reporting structure. BEEP at top, reports cascade down.
 
 ### Agent Visibility
 
@@ -262,7 +262,7 @@ There is no separate messaging or chat system. Tasks are the communication chann
 ### Implications
 
 - An agent's "inbox" is: tasks assigned to them + comments on tasks they're involved in
-- The CEO delegates by creating tasks assigned to the CTO
+- The BEEP delegates by creating tasks assigned to the CTO
 - The CTO breaks those down into sub-tasks assigned to engineers
 - Discussion happens in task comments, not a side channel
 - If an agent needs to escalate, they comment on the parent task or reassign
@@ -316,17 +316,17 @@ How a Company goes from "created" to "running":
 
 1. Human creates a Company and its initial Initiatives
 2. Human defines initial top-level tasks
-3. Human creates the CEO Agent (using the default CEO template or custom)
-4. CEO's first heartbeat: reviews the Initiatives and tasks, proposes a strategic breakdown (org structure, sub-tasks, hiring plan)
-5. **Board approves** the CEO's strategic plan
-6. CEO begins execution — creating tasks, proposing hires (Board-approved), delegating
+3. Human creates the BEEP Agent (using the default BEEP template or custom)
+4. BEEP's first heartbeat: reviews the Initiatives and tasks, proposes a strategic breakdown (org structure, sub-tasks, hiring plan)
+5. **Board approves** the BEEP's strategic plan
+6. BEEP begins execution — creating tasks, proposing hires (Board-approved), delegating
 
 ### Default Agents
 
 Paperclip ships default Agent templates:
 
 - **Default Agent** — a basic Claude Code or Codex loop. Knows the **Paperclip Skill** (SKILL.md) so it can interact with the task system, read Company context, report status.
-- **Default CEO** — extends the Default Agent with CEO-specific behavior: strategic planning, delegation to reports, progress review, Board communication.
+- **Default BEEP** — extends the Default Agent with BEEP-specific behavior: strategic planning, delegation to reports, progress review, Board communication.
 
 These are starting points. Users can customize or replace them entirely.
 
@@ -334,7 +334,7 @@ These are starting points. Users can customize or replace them entirely.
 
 The default agent's loop is **config-driven**. The adapter config contains the instructions that define what the agent does on each heartbeat cycle. There is no hardcoded standard loop — each agent's config determines its behavior.
 
-This means the default CEO config tells the CEO to review strategy, check on reports, etc. The default engineer config tells the engineer to check assigned tasks, pick the highest priority, and work it. But these are config choices, not protocol requirements.
+This means the default BEEP config tells the BEEP to review strategy, check on reports, etc. The default engineer config tells the engineer to check assigned tasks, pick the highest priority, and work it. But these are config choices, not protocol requirements.
 
 ### Paperclip Skill (SKILL.md)
 
@@ -478,7 +478,7 @@ Each is a distinct page/route:
 - [ ] **Cost tracking** — Agents report token usage, per-Agent/task/Company visibility
 - [ ] **Budget controls** — soft alerts + hard ceiling with auto-pause
 - [ ] **Default agent** — basic Claude Code/Codex loop with Paperclip skill
-- [ ] **Default CEO** — strategic planning, delegation, board communication
+- [ ] **Default BEEP** — strategic planning, delegation, board communication
 - [ ] **Paperclip skill (SKILL.md)** — teaches agents to interact with the API
 - [ ] **REST API** — full API for agent interaction (Express)
 - [ ] **Web UI** — React/Vite: org chart, task board, dashboard, cost views

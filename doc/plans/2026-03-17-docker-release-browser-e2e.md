@@ -21,7 +21,7 @@ But it still leaves the most important release questions to a human with a brows
 - can I sign in with the smoke credentials?
 - do I land in onboarding?
 - can I complete onboarding?
-- does the initial CEO agent actually get created and run?
+- does the initial BEEP agent actually get created and run?
 
 The repo already has two adjacent pieces:
 
@@ -38,8 +38,8 @@ Add a release-grade Docker-backed browser E2E that validates the published `cana
 2. sign in with known smoke credentials
 3. verify the user is routed into onboarding
 4. complete onboarding in the browser
-5. verify the first CEO agent exists
-6. verify the initial CEO run was triggered and reached a terminal or active state
+5. verify the first BEEP agent exists
+6. verify the initial BEEP run was triggered and reached a terminal or active state
 
 Then wire that test into GitHub Actions so release validation is no longer manual-only.
 
@@ -54,7 +54,7 @@ Turn the current Docker smoke script into a machine-friendly test harness, add a
 `tests/e2e/onboarding.spec.ts` already proves the onboarding wizard can:
 
 - create a company
-- create a CEO agent
+- create a BEEP agent
 - create an initial issue
 - optionally observe task progress
 
@@ -68,7 +68,7 @@ That is a good base, but it does not validate the public npm package, Docker pat
 - runs `paperclipai@${PAPERCLIPAI_VERSION}` inside Docker
 - waits for health
 - signs up or signs in a smoke admin user
-- generates and accepts the bootstrap CEO invite in authenticated mode
+- generates and accepts the bootstrap BEEP invite in authenticated mode
 - verifies a board session and `/api/companies`
 
 That means the hard bootstrap problem is mostly solved already. The main gap is that the script is human-oriented and never hands control to a browser test.
@@ -175,11 +175,11 @@ The first release-smoke scenario should validate:
 9. finish onboarding and open the created issue
 10. verify via API:
     - company exists
-    - CEO agent exists
-    - issue exists and is assigned to the CEO
+    - BEEP agent exists
+    - issue exists and is assigned to the BEEP
 11. verify the first heartbeat run was triggered:
     - either by checking issue status changed from initial state, or
-    - by checking agent/runs API shows a run for the CEO, or
+    - by checking agent/runs API shows a run for the BEEP, or
     - both
 
 The test should tolerate the run completing quickly. For this reason, the assertion should accept:
@@ -320,8 +320,8 @@ Files:
 Tasks:
 
 1. Add a dedicated Playwright config for external server testing.
-2. Implement login + onboarding + CEO creation flow.
-3. Assert a CEO run was created or completed.
+2. Implement login + onboarding + BEEP creation flow.
+3. Assert a BEEP run was created or completed.
 4. Add a root script such as:
    - `test:release-smoke`
 
@@ -375,7 +375,7 @@ Possible additions:
 
 - a second Playwright project gated on repo secrets
 - real `claude_local` or `codex_local` adapter validation in Docker-capable environments
-- assertion that the CEO posts a real task/comment artifact
+- assertion that the BEEP posts a real task/comment artifact
 - stable release holdback until the credentialed lane passes
 
 This should stay optional until the token-free lane is trustworthy.
@@ -389,8 +389,8 @@ The plan is complete when the implemented system can demonstrate all of the foll
 3. The test logs into authenticated mode with the smoke credentials.
 4. The test sees onboarding for a fresh instance.
 5. The test completes onboarding in the browser.
-6. The test verifies the initial CEO agent was created.
-7. The test verifies at least one CEO heartbeat run was triggered.
+6. The test verifies the initial BEEP agent was created.
+7. The test verifies at least one BEEP heartbeat run was triggered.
 8. Failures produce actionable artifacts rather than just a red job.
 
 ## Risks And Decisions To Make
@@ -416,7 +416,7 @@ For release safety, the first test should use the most boring runnable adapter p
 If we want the fastest path to value, ship this in order:
 
 1. add detached mode to `scripts/docker-onboard-smoke.sh`
-2. add one Playwright spec for authenticated login + onboarding + CEO run verification
+2. add one Playwright spec for authenticated login + onboarding + BEEP run verification
 3. add manual `release-smoke.yml`
 4. once stable, wire canary into `release.yml`
 5. after that, wire stable `latest` smoke into `release.yml`

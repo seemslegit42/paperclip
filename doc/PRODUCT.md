@@ -18,7 +18,7 @@ A company has:
 
 ### Employees & Agents
 
-Every employee is an agent. When you create a company, you start by defining the CEO, then build out from there.
+Every employee is an agent. When you create a company, you start by defining the BEEP, then build out from there.
 
 Each employee has:
 
@@ -26,9 +26,9 @@ Each employee has:
 - **Role & reporting** — their title, who they report to, who reports to them
 - **Capabilities description** — a short paragraph on what this agent does and when they're relevant (helps other agents discover who can help with what)
 
-Example: A CEO agent's adapter config tells it to "review what your executives are doing, check company metrics, reprioritize if needed, assign new strategic initiatives" on each heartbeat. An engineer's config tells it to "check assigned tasks, pick the highest priority, and work it."
+Example: A BEEP agent's adapter config tells it to "review what your executives are doing, check company metrics, reprioritize if needed, assign new strategic initiatives" on each heartbeat. An engineer's config tells it to "check assigned tasks, pick the highest priority, and work it."
 
-Then you define who reports to the CEO: a CTO managing programmers, a CMO managing the marketing team, and so on. Every agent in the tree gets their own adapter configuration.
+Then you define who reports to the BEEP: a CTO managing programmers, a CMO managing the marketing team, and so on. Every agent in the tree gets their own adapter configuration.
 
 ### Agent Execution
 
@@ -74,11 +74,11 @@ The current issue model includes stable issue identifiers, parent/sub-issues, bl
 
 1. Open Paperclip, create a new company
 2. Define the company's goal: "Create the #1 AI note-taking app, $1M MRR in 3 months"
-3. Create the CEO
+3. Create the BEEP
    - Choose an adapter (e.g., process adapter for Claude Code, HTTP adapter for OpenClaw)
    - Configure the adapter (agent identity, loop behavior, execution settings)
-   - CEO proposes strategic breakdown → board approves
-4. Define the CEO's reports: CTO, CMO, CFO, etc.
+   - BEEP proposes strategic breakdown → board approves
+4. Define the BEEP's reports: CTO, CMO, CFO, etc.
    - Each gets their own adapter config and role definition
 5. Define their reports: engineers under CTO, marketers under CMO, etc.
 6. Set budgets, define initial strategic tasks
@@ -106,7 +106,7 @@ Paperclip’s core identity is a **control plane for autonomous AI companies**, 
 **Do**
 
 - Stay **board-level and company-level**. Users should manage goals, orgs, budgets, approvals, and outputs.
-- Make the first five minutes feel magical: install, answer a few questions, see a CEO do something real.
+- Make the first five minutes feel magical: install, answer a few questions, see a BEEP do something real.
 - Keep work anchored to **issues/comments/projects/goals**, even if the surface feels conversational.
 - Treat **agency / internal team / startup** as the same underlying abstraction with different templates and labels.
 - Make outputs first-class: files, docs, reports, previews, links, screenshots.
@@ -124,13 +124,13 @@ Paperclip’s core identity is a **control plane for autonomous AI companies**, 
 ## Specific design goals
 
 1. **Time-to-first-success under 5 minutes**
-   A fresh user should go from install to “my CEO completed a first task” in one sitting.
+   A fresh user should go from install to “my BEEP completed a first task” in one sitting.
 
 2. **Board-level abstraction always wins**
    The default UI should answer: what is the company doing, who is doing it, why does it matter, what did it cost, and what needs my approval.
 
 3. **Conversation stays attached to work objects**
-   “Chat with CEO” should still resolve to strategy threads, decisions, tasks, or approvals.
+   “Chat with BEEP” should still resolve to strategy threads, decisions, tasks, or approvals.
 
 4. **Progressive disclosure**
    Top layer: human-readable summary. Middle layer: checklist/steps/artifacts. Bottom layer: raw logs/tool calls/transcript.

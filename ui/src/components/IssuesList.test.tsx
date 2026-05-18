@@ -376,14 +376,14 @@ describe("IssuesList", () => {
     );
 
     await waitForAssertion(() => {
-      const button = Array.from(container.querySelectorAll("button")).find(
+      const button = Array.from(document.body.querySelectorAll("button")).find(
         (candidate) => candidate.textContent?.includes("New Sub-issue"),
       );
       expect(button).not.toBeUndefined();
     });
 
     await act(async () => {
-      const button = Array.from(container.querySelectorAll("button")).find(
+      const button = Array.from(document.body.querySelectorAll("button")).find(
         (candidate) => candidate.textContent?.includes("New Sub-issue"),
       );
       button?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -724,7 +724,7 @@ describe("IssuesList", () => {
       expect(container.textContent).toContain("... and 2 more");
       expect(container.textContent).not.toContain("blocked by PAP-3");
       expect(container.textContent).not.toContain("blocked by PAP-4");
-      const blockerButtons = Array.from(container.querySelectorAll("button"))
+      const blockerButtons = Array.from(document.body.querySelectorAll("button"))
         .filter((button) => button.textContent?.includes("blocked by"));
       expect(blockerButtons).toHaveLength(1);
       expect(blockerButtons[0]?.textContent).toBe("blocked by PAP-2 · step 2 ... and 2 more");
@@ -1281,7 +1281,7 @@ describe("IssuesList", () => {
 
     await waitForAssertion(() => {
       const columnsButton = Array.from(document.body.querySelectorAll("button")).find(
-        (button) => button.getAttribute("title") === "Columns",
+        (button) => button.getAttribute("title") === "Observe Columns",
       );
       expect(columnsButton).not.toBeUndefined();
       expect(container.textContent).toContain("PAP-9");
@@ -1418,14 +1418,14 @@ describe("IssuesList", () => {
     await waitForAssertion(() => {
       expect(container.textContent).toContain("Alpha issue");
       expect(container.textContent).toContain("Beta issue");
-      const workspaceButton = Array.from(container.querySelectorAll("button")).find(
+      const workspaceButton = Array.from(document.body.querySelectorAll("button")).find(
         (button) => button.textContent === "Alpha",
       );
       expect(workspaceButton).not.toBeUndefined();
     });
 
     await act(async () => {
-      const workspaceButton = Array.from(container.querySelectorAll("button")).find(
+      const workspaceButton = Array.from(document.body.querySelectorAll("button")).find(
         (button) => button.textContent === "Alpha",
       );
       workspaceButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));

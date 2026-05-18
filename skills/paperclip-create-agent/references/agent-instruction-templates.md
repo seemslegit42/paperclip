@@ -62,7 +62,7 @@ Use this when the requested role is close to an existing template but not the sa
 
 ## How to apply the generic fallback
 
-Use this when no template is close. Open `references/baseline-role-guide.md` and follow its section outline. That guide is structured so a CEO or hiring agent can produce a usable `AGENTS.md` without asking the board for prompt-writing help. After drafting, run the pre-submit checklist.
+Use this when no template is close. Open `references/baseline-role-guide.md` and follow its section outline. That guide is structured so a BEEP or hiring agent can produce a usable `AGENTS.md` without asking the board for prompt-writing help. After drafting, run the pre-submit checklist.
 
 ## Lens-based role drafting (worked examples)
 

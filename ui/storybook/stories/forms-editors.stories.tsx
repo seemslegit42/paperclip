@@ -592,7 +592,7 @@ function PickerGallery() {
             />
           </div>
         </StatePanel>
-        <StatePanel label="ReportsToPicker" detail="Selected manager, CEO disabled state, and filtered hierarchy choices.">
+        <StatePanel label="ReportsToPicker" detail="Selected manager, BEEP disabled state, and filtered hierarchy choices.">
           <div className="flex flex-wrap gap-3">
             <ReportsToPicker agents={agentsWithTerminated} value={manager} onChange={setManager} excludeAgentIds={["agent-codex"]} />
             <ReportsToPicker agents={agentsWithTerminated} value={null} onChange={() => undefined} disabled />

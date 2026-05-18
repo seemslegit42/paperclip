@@ -345,17 +345,17 @@ export function SidebarAgents() {
 
   return (
     <SidebarSection
-      label="Agents"
+      label="The Sentinels"
       collapsible={{ open, onOpenChange: setOpen }}
       headerAction={{
-        ariaLabel: "New agent",
+        ariaLabel: "Summon Sentinel",
         icon: Plus,
         onClick: openNewAgent,
       }}
       menu={{
         ariaLabel: "Agents section actions",
         actions: [
-          { type: "item", label: "Browse agents", icon: Users, href: "/agents/all" },
+          { type: "item", label: "Observe Sentinels", icon: Users, href: "/agents/all" },
           { type: "separator" },
         ],
         radioLabel: "Agent sort",

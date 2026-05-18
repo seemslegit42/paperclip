@@ -9,6 +9,7 @@ import { Identity } from "./Identity";
 import { RunChatSurface } from "./RunChatSurface";
 import { StatusBadge } from "./StatusBadge";
 import { useLiveRunTranscripts } from "./transcript/useLiveRunTranscripts";
+import { cn } from "@/lib/utils";
 
 interface LiveRunWidgetProps {
   issueId: string;
@@ -89,31 +90,31 @@ export function LiveRunWidget({ issueId, companyId }: LiveRunWidgetProps) {
   if (runs.length === 0) return null;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-cyan-500/25 bg-background/80 shadow-[0_18px_50px_rgba(6,182,212,0.08)]">
-      <div className="border-b border-border/60 bg-cyan-500/[0.04] px-4 py-3">
-        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+    <div className="overflow-hidden glass-pane rounded-xl border-roman-aqua/20 shadow-[0_0_50px_rgba(32,178,170,0.1)]">
+      <div className="border-b border-vitreous-white/10 bg-roman-aqua/5 px-4 py-3">
+        <div className="text-xs font-oracle font-bold uppercase tracking-[0.2em] text-roman-aqua drop-shadow-[0_0_8px_rgba(32,178,170,0.5)]">
           Live Runs
         </div>
-        <div className="mt-1 text-xs text-muted-foreground">
-          Uses the shared chat-style run surface from issue activity.
+        <div className="mt-1 text-[10px] font-scribe text-conchoidal-gray/70 uppercase tracking-wider">
+          Transmuting chaos into silence...
         </div>
       </div>
 
-      <div className="divide-y divide-border/60">
+      <div className="divide-y divide-vitreous-white/5">
         {runs.map((run) => {
           const isActive = isRunActive(run.status);
           const transcript = transcriptByRun.get(run.id) ?? [];
           return (
-            <section key={run.id} className="px-4 py-4">
+            <section key={run.id} className={cn("px-4 py-4", isActive && "bg-roman-aqua/5")}>
               <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <Link to={`/agents/${run.agentId}`} className="inline-flex hover:underline">
+                  <Link to={`/agents/${run.agentId}`} className="inline-flex hover:opacity-80 transition-opacity">
                     <Identity name={run.agentName} size="sm" />
                   </Link>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] font-scribe text-conchoidal-gray/60 uppercase tracking-tight">
                     <Link
                       to={`/agents/${run.agentId}/runs/${run.id}`}
-                      className="inline-flex items-center rounded-full border border-border/70 bg-background/70 px-2 py-1 font-mono hover:border-cyan-500/30 hover:text-foreground"
+                      className="inline-flex items-center rounded-full border border-vitreous-white/10 bg-vitreous-white/5 px-2 py-1 font-mono hover:border-roman-aqua/30 hover:text-vitreous-white transition-colors"
                     >
                       {run.id.slice(0, 8)}
                     </Link>
@@ -127,7 +128,7 @@ export function LiveRunWidget({ issueId, companyId }: LiveRunWidgetProps) {
                     <button
                       onClick={() => handleCancelRun(run.id)}
                       disabled={cancellingRunIds.has(run.id)}
-                      className="inline-flex items-center gap-1 rounded-full border border-red-500/20 bg-red-500/[0.06] px-2.5 py-1 text-[11px] font-medium text-red-700 transition-colors hover:bg-red-500/[0.12] dark:text-red-300 disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-full border border-destructive/30 bg-destructive/10 px-2.5 py-1 text-[11px] font-scribe font-semibold text-destructive transition-all hover:bg-destructive/20 disabled:opacity-50"
                     >
                       <Square className="h-2.5 w-2.5" fill="currentColor" />
                       {cancellingRunIds.has(run.id) ? "Stopping…" : "Stop"}
@@ -135,7 +136,7 @@ export function LiveRunWidget({ issueId, companyId }: LiveRunWidgetProps) {
                   )}
                   <Link
                     to={`/agents/${run.agentId}/runs/${run.id}`}
-                    className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-background/70 px-2.5 py-1 text-[11px] font-medium text-cyan-700 transition-colors hover:border-cyan-500/30 hover:text-cyan-600 dark:text-cyan-300"
+                    className="inline-flex items-center gap-1 rounded-full border border-roman-aqua/30 bg-roman-aqua/10 px-2.5 py-1 text-[11px] font-scribe font-semibold text-roman-aqua transition-all hover:bg-roman-aqua/20"
                   >
                     Open run
                     <ExternalLink className="h-3 w-3" />
@@ -143,7 +144,7 @@ export function LiveRunWidget({ issueId, companyId }: LiveRunWidgetProps) {
                 </div>
               </div>
 
-              <div className="max-h-[320px] overflow-y-auto pr-1">
+              <div className="max-h-[320px] overflow-y-auto pr-1 scrollbar-auto-hide glass-pane border-vitreous-white/5 bg-obsidian-black/40 rounded-lg p-3">
                 <RunChatSurface
                   run={run}
                   transcript={transcript}

@@ -444,7 +444,7 @@ A company template is a JSON file describing a full company structure:
   "agents": [
     {
       "ref": "ceo",
-      "name": "CEO Agent",
+      "name": "BEEP Agent",
       "role": "pm",
       "budgetCents": 100000,
       "metadata": { "responsibilities": "Strategy, fundraising, hiring" }

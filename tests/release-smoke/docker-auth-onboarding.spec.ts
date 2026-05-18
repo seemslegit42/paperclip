@@ -10,7 +10,7 @@ const ADMIN_PASSWORD =
   "paperclip-smoke-password";
 
 const COMPANY_NAME = `Release-Smoke-${Date.now()}`;
-const AGENT_NAME = "CEO";
+const AGENT_NAME = "BEEP";
 const TASK_TITLE = "Release smoke task";
 
 async function signIn(page: Page) {
@@ -38,7 +38,7 @@ async function openOnboarding(page: Page) {
 }
 
 test.describe("Docker authenticated onboarding smoke", () => {
-  test("logs in, completes onboarding, and triggers the first CEO run", async ({
+  test("logs in, completes onboarding, and triggers the first BEEP run", async ({
     page,
   }) => {
     await signIn(page);
@@ -51,7 +51,7 @@ test.describe("Docker authenticated onboarding smoke", () => {
       page.locator("h3", { hasText: "Create your first agent" })
     ).toBeVisible({ timeout: 10_000 });
 
-    await expect(page.locator('input[placeholder="CEO"]')).toHaveValue(AGENT_NAME);
+    await expect(page.locator('input[placeholder="BEEP"]')).toHaveValue(AGENT_NAME);
     await page.getByRole("button", { name: "Next" }).click();
 
     await expect(

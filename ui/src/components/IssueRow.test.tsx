@@ -84,7 +84,7 @@ describe("IssueRow", () => {
     container.remove();
   });
 
-  it("suppresses accent hover styling when the row is selected", () => {
+  it("applies selected styling when the row is selected", () => {
     const root = createRoot(container);
     const issue = createIssue();
 
@@ -94,8 +94,9 @@ describe("IssueRow", () => {
 
     const link = container.querySelector("[data-inbox-issue-link]") as HTMLAnchorElement | null;
     expect(link).not.toBeNull();
-    expect(link?.className).toContain("hover:bg-transparent");
-    expect(link?.className).not.toContain("hover:bg-accent/50");
+    expect(link?.className).toContain("bg-vitreous-white/5");
+    expect(link?.className).toContain("border-l-2");
+    expect(link?.className).toContain("border-l-roman-aqua");
 
     act(() => {
       root.unmount();
@@ -111,17 +112,15 @@ describe("IssueRow", () => {
 
     const markReadButton = container.querySelector('button[aria-label="Mark as read"]');
     const unreadDot = markReadButton?.querySelector("span");
-    const statusIcon = container.querySelector('span[class*="border-muted-foreground"]');
+    const statusIcon = container.querySelector('span[class*="border-roman-aqua/50"]');
 
     expect(markReadButton).not.toBeNull();
-    expect(markReadButton?.className).toContain("hover:bg-muted/80");
-    expect(markReadButton?.className).not.toContain("hover:bg-blue-500/20");
+    expect(markReadButton?.className).toContain("hover:bg-vitreous-white/10");
     expect(unreadDot).not.toBeNull();
-    expect(unreadDot?.className).toContain("bg-muted-foreground/70");
-    expect(unreadDot?.className).not.toContain("bg-blue-600");
+    expect(unreadDot?.className).toContain("bg-roman-aqua");
     expect(statusIcon).not.toBeNull();
-    expect(statusIcon?.className).toContain("!border-muted-foreground");
-    expect(statusIcon?.className).toContain("!text-muted-foreground");
+    expect(statusIcon?.className).toContain("!border-roman-aqua/50");
+    expect(statusIcon?.className).toContain("!text-roman-aqua/80");
 
     act(() => {
       root.unmount();
@@ -142,6 +141,7 @@ describe("IssueRow", () => {
 
     const link = container.querySelector("[data-inbox-issue-link]") as HTMLAnchorElement | null;
     expect(link).not.toBeNull();
+    // Path should be resolved via mocked router link
     expect(link?.getAttribute("to") ?? link?.getAttribute("href")).toBe("/issues/PAP-1");
 
     act(() => {

@@ -28,7 +28,7 @@ Security/control note:
 - The OpenClaw invite prompt is created from a controlled endpoint:
   - `POST /api/companies/{companyId}/openclaw/invite-prompt`
   - board users with invite permission can call it
-  - agent callers are limited to the company CEO agent
+  - agent callers are limited to the company BEEP agent
 
 5. Approve the join request in Paperclip UI, then confirm the OpenClaw agent appears in CLA agents.
 
